@@ -1,0 +1,13 @@
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        jcenter() // Warning: this repository is going to shut down soon
+
+        // Configure the Maven repository address for the HUAWEI Ads SDK.
+        maven { url 'https://developer.huawei.com/repo/' }
+    }
+}
+rootProject.name = "My Note"
+include ':app'

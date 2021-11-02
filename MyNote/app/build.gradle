@@ -1,0 +1,75 @@
+plugins {
+    id 'com.android.application'
+    id 'com.huawei.agconnect'
+}
+
+android {
+    compileSdk 30
+
+    defaultConfig {
+        applicationId "com.tuplv.mynote"
+        minSdk 24
+        targetSdk 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+
+    signingConfigs {
+        config {
+            storeFile file('D:\\FITHOU\\Android\\Assigment\\MyNote\\key.jks')
+            storePassword 'Tu@123'
+            keyPassword 'Tu@123'
+            keyAlias 'key_location'
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.config
+            packagingOptions  {
+                // If the CPU architecture is ARMv7 or ARMv8, add the following configuration:
+                doNotStrip "*/arm64-v8a/libucs-credential.so"
+                doNotStrip "*/armeabi-v7a/libucs-credential.so"
+                // If the CPU architecture is x86, add the following configuration:
+                doNotStrip "*/x86/libucs-credential.so"
+                doNotStrip "*/x86_64/libucs-credential.so"
+            }
+        }
+        release {
+            signingConfig signingConfigs.config
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            packagingOptions  {
+                // If the CPU architecture is ARMv7 or ARMv8, add the following configuration:
+                doNotStrip "*/arm64-v8a/libucs-credential.so"
+                doNotStrip "*/armeabi-v7a/libucs-credential.so"
+                // If the CPU architecture is x86, add the following configuration:
+                doNotStrip "*/x86/libucs-credential.so"
+                doNotStrip "*/x86_64/libucs-credential.so"
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    implementation 'com.huawei.hms:base:6.1.0.302'
+    implementation 'com.huawei.hms:ads:3.4.47.302'
+    implementation 'com.huawei.hms:ads-lite:13.4.47.302'
+    implementation 'com.huawei.hms:ads-identifier:3.4.34.301'
+    implementation 'com.huawei.hms:scanplus:2.1.0.300'
+    implementation 'com.huawei.agconnect:agconnect-core:1.6.0.300'
+}
