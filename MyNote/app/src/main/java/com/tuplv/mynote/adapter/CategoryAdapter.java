@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.tuplv.mynote.R;
 import com.tuplv.mynote.interf.OnCategoryClickListener;
+import com.tuplv.mynote.interf.OnNoteClickListener;
 import com.tuplv.mynote.model.Category;
 
 import java.util.List;
@@ -25,9 +26,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     private Context context;
     private int layout;
     private List<Category> listCategory;
-    public static int category_id = 0;
 
     private OnCategoryClickListener onCategoryClickListener;
+    private OnNoteClickListener onNoteClickListener;
 
     int row_index = -1;
 
@@ -36,6 +37,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         this.layout = layout;
         this.listCategory = listCategory;
         this.onCategoryClickListener = onCategoryClickListener;
+    }
+
+    public CategoryAdapter(Context context, int layout, List<Category> listCategory, OnNoteClickListener onNoteClickListener) {
+        this.context = context;
+        this.layout = layout;
+        this.listCategory = listCategory;
+        this.onNoteClickListener = onNoteClickListener;
     }
 
     public CategoryAdapter(Context context, int layout, List<Category> listCategory) {
@@ -68,6 +76,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                     notifyDataSetChanged();
                 }
             });
+
             if (row_index == -1) {
                 row_index = 0;
                 holder.tvItemCategory.setBackgroundResource(R.drawable.custom_background_item_category_color);

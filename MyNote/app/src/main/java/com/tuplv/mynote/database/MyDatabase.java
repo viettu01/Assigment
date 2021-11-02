@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.tuplv.mynote.R;
 import com.tuplv.mynote.model.Category;
 import com.tuplv.mynote.model.Note;
 

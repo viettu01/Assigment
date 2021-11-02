@@ -1,23 +1,11 @@
 package com.tuplv.mynote.activity;
 
 import android.Manifest;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.text.TextUtils;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -31,18 +19,12 @@ import com.huawei.hms.ads.AdParam;
 import com.huawei.hms.ads.BannerAdSize;
 import com.huawei.hms.ads.HwAds;
 import com.huawei.hms.ads.banner.BannerView;
-import com.huawei.hms.hmsscankit.ScanUtil;
-import com.huawei.hms.ml.scan.HmsScan;
-import com.huawei.hms.ml.scan.HmsScanAnalyzerOptions;
 import com.tuplv.mynote.R;
 import com.tuplv.mynote.fragment.CalendarFragment;
 import com.tuplv.mynote.fragment.NoteFragment;
 import com.tuplv.mynote.fragment.RemindFragment;
 import com.tuplv.mynote.fragment.SettingsFragment;
 import com.tuplv.mynote.fragment.TrashFragment;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -85,12 +67,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         nav.getMenu().findItem(R.id.nav_note).setChecked(true);
     }
 
-    private void mapping() {
-        drawerLayout = findViewById(R.id.drawerLayout);
-        tbMain = findViewById(R.id.tbMain);
-        nav = findViewById(R.id.nav);
-    }
-
     private void loadAds() {
         HwAds.init(this);
         // Obtain BannerView.
@@ -103,6 +79,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Create an ad request to load an ad.
         AdParam adParam = new AdParam.Builder().build();
         bannerView.loadAd(adParam);
+    }
+
+    private void mapping() {
+        drawerLayout = findViewById(R.id.drawerLayout);
+        tbMain = findViewById(R.id.tbMain);
+        nav = findViewById(R.id.nav);
     }
 
     @Override

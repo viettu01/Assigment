@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.AddUpdateNoteActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/toolbar"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edtTitleNote"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="@string/title"
+            android:maxLines="1"
+            android:padding="15dp"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textColorHint="#80FFFFFF"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/imgCloseAddNote"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:padding="15dp"
+            android:src="@drawable/ic_clear" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvDateUpdateNote"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:paddingStart="15dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/spnCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:gravity="end" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edtContentNote"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#ECECEC"
+        android:gravity="top"
+        android:hint="@string/content"
+        android:inputType="textMultiLine"
+        android:paddingStart="15dp"
+        android:paddingTop="5dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/toolbar">
+
+        <ImageView
+            android:id="@+id/imgTodoList"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_check_box" />
+
+        <ImageView
+            android:id="@+id/imgAddNote"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_check" />
+    </RelativeLayout>
+</LinearLayout>

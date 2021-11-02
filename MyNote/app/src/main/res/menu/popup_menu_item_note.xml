@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mnuChangeTag"
+        android:icon="@drawable/ic_local_offer_24"
+        android:title="@string/change_tag" />
+    <item
+        android:id="@+id/mnuDeleteNote"
+        android:icon="@drawable/ic_delete"
+        android:title="@string/delete" />
+    <item
+        android:id="@+id/mnuShare"
+        android:icon="@drawable/ic_share"
+        android:title="@string/share" />
+</menu>

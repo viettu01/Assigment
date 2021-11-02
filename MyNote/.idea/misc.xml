@@ -15,12 +15,13 @@
         <entry key="..\:/FITHOU/Android/Assigment/MyNote/app/src/main/res/drawable/ic_qr_code_scanner.xml" value="0.25277777777777777" />
         <entry key="..\:/FITHOU/Android/Assigment/MyNote/app/src/main/res/layout/activity_add_update_category.xml" value="0.1" />
         <entry key="..\:/FITHOU/Android/Assigment/MyNote/app/src/main/res/layout/activity_add_update_note.xml" value="0.2101851851851852" />
-        <entry key="..\:/FITHOU/Android/Assigment/MyNote/app/src/main/res/layout/activity_list_category.xml" value="0.1" />
-        <entry key="..\:/FITHOU/Android/Assigment/MyNote/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/FITHOU/Android/Assigment/MyNote/app/src/main/res/layout/activity_list_category.xml" value="0.23148148148148148" />
+        <entry key="..\:/FITHOU/Android/Assigment/MyNote/app/src/main/res/layout/activity_main.xml" value="0.2553846153846154" />
+        <entry key="..\:/FITHOU/Android/Assigment/MyNote/app/src/main/res/layout/activity_qr_code.xml" value="0.259375" />
         <entry key="..\:/FITHOU/Android/Assigment/MyNote/app/src/main/res/layout/activity_select_color_note.xml" value="0.259375" />
         <entry key="..\:/FITHOU/Android/Assigment/MyNote/app/src/main/res/layout/dialog_update_category_of_note.xml" value="0.259375" />
         <entry key="..\:/FITHOU/Android/Assigment/MyNote/app/src/main/res/layout/fragment_calendar.xml" value="0.259375" />
-        <entry key="..\:/FITHOU/Android/Assigment/MyNote/app/src/main/res/layout/fragment_note.xml" value="0.1" />
+        <entry key="..\:/FITHOU/Android/Assigment/MyNote/app/src/main/res/layout/fragment_note.xml" value="0.23148148148148148" />
         <entry key="..\:/FITHOU/Android/Assigment/MyNote/app/src/main/res/layout/fragment_remind.xml" value="0.259375" />
         <entry key="..\:/FITHOU/Android/Assigment/MyNote/app/src/main/res/layout/fragment_settings.xml" value="0.259375" />
         <entry key="..\:/FITHOU/Android/Assigment/MyNote/app/src/main/res/layout/fragment_trash.xml" value="0.259375" />
@@ -33,6 +34,7 @@
         <entry key="..\:/FITHOU/Android/Assigment/MyNote/app/src/main/res/menu/menu_nav.xml" value="0.259375" />
         <entry key="..\:/FITHOU/Android/Assigment/MyNote/app/src/main/res/menu/popup_menu_item_note.xml" value="0.259375" />
         <entry key="..\:/FITHOU/Android/Assigment/MyNote/app/src/main/res/menu/popup_menu_more_in_list_category.xml" value="0.259375" />
+        <entry key="..\:/FITHOU/Android/DemoGit/MyNote/app/src/main/res/layout/fragment_note.xml" value="0.18333333333333332" />
       </map>
     </option>
   </component>
