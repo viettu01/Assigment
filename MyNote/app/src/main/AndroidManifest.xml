@@ -20,6 +20,9 @@
         android:theme="@style/Theme.MyNote"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.ListCategoryActivity"
+            android:exported="true" />
+        <activity
             android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>

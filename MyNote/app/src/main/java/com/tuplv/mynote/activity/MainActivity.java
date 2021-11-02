@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         mapping();
 
+        loadAds();
+
         setSupportActionBar(tbMain);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, tbMain, R.string.nav_drawer_open, R.string.nav_drawer_close);
         drawerLayout.addDrawerListener(toggle);
@@ -87,6 +89,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawerLayout);
         tbMain = findViewById(R.id.tbMain);
         nav = findViewById(R.id.nav);
+    }
+
+    private void loadAds() {
+        HwAds.init(this);
+        // Obtain BannerView.
+        BannerView bannerView = findViewById(R.id.hw_banner_view);
+        // Set the ad unit ID and ad dimensions. "testw6vs28auh3" is a dedicated test ad unit ID.
+        bannerView.setAdId("testw6vs28auh3");
+        bannerView.setBannerAdSize(BannerAdSize.BANNER_SIZE_360_57);
+        // Set the refresh interval to 30 seconds.
+        bannerView.setBannerRefresh(30);
+        // Create an ad request to load an ad.
+        AdParam adParam = new AdParam.Builder().build();
+        bannerView.loadAd(adParam);
     }
 
     @Override
