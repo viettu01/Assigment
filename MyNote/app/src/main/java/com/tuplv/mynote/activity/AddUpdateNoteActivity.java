@@ -1,8 +1,11 @@
 package com.tuplv.mynote.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -11,12 +14,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.huawei.hms.hmsscankit.ScanUtil;
+import com.huawei.hms.ml.scan.HmsScan;
+import com.huawei.hms.ml.scan.HmsScanAnalyzerOptions;
 import com.tuplv.mynote.R;
 import com.tuplv.mynote.database.MyDatabase;
 import com.tuplv.mynote.model.Category;
 import com.tuplv.mynote.model.Note;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,9 +35,11 @@ import java.util.List;
 
 public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public static final int REQUEST_CODE_SCAN = 0x01;
+
     EditText edtTitleNote, edtContentNote;
     TextView tvDateUpdateNote;
-    ImageView imgCloseAddNote, imgTodoList, imgAddNote;
+    ImageView imgCloseAddNote, imgTodoList, imgAddNote, imgScanQRCode;
     Spinner spnCategory;
 
     MyDatabase myDatabase = MyDatabase.getInstance(this);
@@ -45,6 +58,7 @@ public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnC
         mapping();
         setDateTimeUpdateNote();
         getCategory();
+        checkUpdate();
     }
 
     private void mapping() {
@@ -53,12 +67,14 @@ public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnC
         tvDateUpdateNote = findViewById(R.id.tvDateUpdateNote);
         imgCloseAddNote = findViewById(R.id.imgCloseAddNote);
         imgTodoList = findViewById(R.id.imgTodoList);
+        imgScanQRCode = findViewById(R.id.imgScanQRCode);
         imgAddNote = findViewById(R.id.imgAddNote);
         spnCategory = findViewById(R.id.spnCategory);
 
         tvDateUpdateNote.setOnClickListener(this);
         imgCloseAddNote.setOnClickListener(this);
         imgTodoList.setOnClickListener(this);
+        imgScanQRCode.setOnClickListener(this);
         imgAddNote.setOnClickListener(this);
     }
 
@@ -70,6 +86,13 @@ public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnC
                 finish();
                 break;
             case R.id.imgTodoList:
+                break;
+            case R.id.imgScanQRCode:
+                int result = ScanUtil.startScan(this,
+                        REQUEST_CODE_SCAN,
+                        new HmsScanAnalyzerOptions.Creator()
+                                .setHmsScanTypes(HmsScan.ALL_SCAN_TYPE, HmsScan.CODE128_SCAN_TYPE)
+                                .create());
                 break;
             case R.id.imgAddNote:
                 addNote();
@@ -90,6 +113,21 @@ public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnC
         }
     }
 
+    private void checkUpdate() {
+        note = (Note) getIntent().getSerializableExtra("note");
+        if (note != null) {
+            edtTitleNote.setText(note.getTitle());
+            tvDateUpdateNote.setText(note.getUpdateAt());
+            edtContentNote.setText(note.getContent());
+
+            for (int i = 0; i < listCategory.size(); i++) {
+                if (note.getCategoryId() == listCategory.get(i).getId()) {
+                    spnCategory.setSelection(i);
+                }
+            }
+        }
+    }
+
     private void addNote() {
         Category category = (Category) spnCategory.getSelectedItem();
         int id_category = category.getId();
@@ -98,12 +136,56 @@ public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnC
         String content = edtContentNote.getText().toString();
         String color = String.valueOf(((ColorDrawable) edtContentNote.getBackground()).getColor());
 
-        note = new Note(0, id_category, title, content, color, createdAt, dateFormat.format(new Date()));
-        if (myDatabase.insertNote(note)) {
-            Toast.makeText(this, "Successful!", Toast.LENGTH_SHORT).show();
-            finish();
+        if (note != null) {
+            note = new Note(note.getId(), id_category, title, content, color, note.getCreatedAt(), dateFormat.format(new Date()));
+            if (myDatabase.updateNote(note)) {
+                Toast.makeText(this, "Successfully!", Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Toast.makeText(this, "Fix failed notes", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(this, "Add fail!", Toast.LENGTH_SHORT).show();
+            note = new Note(0, id_category, title, content, color, createdAt, dateFormat.format(new Date()));
+            if (myDatabase.insertNote(note)) {
+                Toast.makeText(this, "Successful!", Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Toast.makeText(this, "Add fail!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (permissions == null || grantResults == null || grantResults.length < 2 ||
+                grantResults[0] != PackageManager.PERMISSION_GRANTED ||
+                grantResults[1] != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK || data == null) {
+            return;
+        }
+        if (requestCode == REQUEST_CODE_SCAN) {
+            HmsScan obj = data.getParcelableExtra(ScanUtil.RESULT);
+
+            if (obj instanceof HmsScan) {
+                if (!TextUtils.isEmpty(obj.getOriginalValue())) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(obj.getOriginalValue());
+                        edtTitleNote.setText(jsonObject.getString("title"));
+                        edtContentNote.setText(jsonObject.getString("content"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return;
+            }
         }
     }
 }

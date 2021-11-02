@@ -90,6 +90,16 @@
             android:src="@drawable/ic_check_box" />
 
         <ImageView
+            android:id="@+id/imgScanQRCode"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/imgTodoList"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_qr_code_scanner" />
+
+        <ImageView
             android:id="@+id/imgAddNote"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

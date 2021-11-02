@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 import com.huawei.hms.hmsscankit.ScanUtil;
 import com.huawei.hms.hmsscankit.WriterException;
 import com.huawei.hms.ml.scan.HmsBuildBitmapOption;
@@ -54,6 +55,9 @@ public class NoteFragment extends Fragment implements View.OnClickListener, OnNo
     FloatingActionButton fabAddNote;
     RecyclerView rvCategory, rvNote;
 
+    SharedPreferences sharedPreferences;
+    int ROW = 1;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,6 +69,9 @@ public class NoteFragment extends Fragment implements View.OnClickListener, OnNo
 
         imgAddCategory.setOnClickListener(this);
         fabAddNote.setOnClickListener(this);
+
+        sharedPreferences = getActivity().getSharedPreferences("option", MODE_PRIVATE);
+        ROW = sharedPreferences.getInt("ROW", 1);
 
         return view;
     }
@@ -115,35 +122,56 @@ public class NoteFragment extends Fragment implements View.OnClickListener, OnNo
         StaggeredGridLayoutManager staggeredGridLayoutManager;
         noteAdapter = new NoteAdapter(getActivity(), R.layout.item_note, listNote, this);
         rvNote.setAdapter(noteAdapter);
-        staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        if (sharedPreferences != null) {
+            staggeredGridLayoutManager = new StaggeredGridLayoutManager(ROW, StaggeredGridLayoutManager.VERTICAL);
+        } else {
+            staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        }
         rvNote.setLayoutManager(staggeredGridLayoutManager);
+    }
+
+    @Override
+    public void goToActivityUpdate(Note note) {
+        Intent intent = new Intent(getActivity(), AddUpdateNoteActivity.class);
+        intent.putExtra("note", note);
+        startActivity(intent);
     }
 
     @Override
     public void onDeleteClick(Note note) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Warning!");
+        builder.setTitle("Cảnh báo!");
         builder.setIcon(android.R.drawable.ic_delete);
-        builder.setMessage("Delete this note?");
-        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+        builder.setMessage("Xóa ghi chú này?");
+        builder.setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (myDatabase.deleteNote(note)) {
-                    Toast.makeText(getActivity(), "Successful!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Xóa ghi chú thành công", Toast.LENGTH_SHORT).show();
                     listNote.remove(note);
                     noteAdapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(getActivity(), "Failed!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Xóa ghi chú thất bại", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
             }
         });
         builder.show();
+    }
+
+    @Override
+    public void onGetListNoteByCategoryId(int id) {
+        if (id == 1) {
+            listNote = myDatabase.getAllNote();
+        } else {
+            listNote = myDatabase.getNoteByCategoryId(id);
+        }
+        setDataNoteToView();
     }
 
     @Override

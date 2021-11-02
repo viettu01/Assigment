@@ -26,6 +26,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     private Context context;
     private int layout;
     private List<Category> listCategory;
+    public static int category_id = 0;
 
     private OnCategoryClickListener onCategoryClickListener;
     private OnNoteClickListener onNoteClickListener;
@@ -73,6 +74,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                     row_index = position;
+                    category_id = category.getId();
+                    onNoteClickListener.onGetListNoteByCategoryId(category_id);
                     notifyDataSetChanged();
                 }
             });
