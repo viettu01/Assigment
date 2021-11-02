@@ -44,6 +44,7 @@ import com.tuplv.mynote.fragment.TrashFragment;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+//Lê đã vào đây
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final int DEFAULT_VIEW = 0x22;
