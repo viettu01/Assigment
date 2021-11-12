@@ -74,4 +74,5 @@ dependencies {
     implementation 'com.huawei.agconnect:agconnect-core:1.6.0.300'
 
     implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.github.yukuku:ambilwarna:2.0.1'
 }

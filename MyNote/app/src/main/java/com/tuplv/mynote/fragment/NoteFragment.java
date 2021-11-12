@@ -32,6 +32,7 @@ import com.huawei.hms.ml.scan.HmsScan;
 import com.tuplv.mynote.R;
 import com.tuplv.mynote.activity.AddUpdateNoteActivity;
 import com.tuplv.mynote.activity.ListCategoryActivity;
+import com.tuplv.mynote.activity.MainActivity;
 import com.tuplv.mynote.adapter.CategoryAdapter;
 import com.tuplv.mynote.adapter.NoteAdapter;
 import com.tuplv.mynote.database.MyDatabase;
@@ -105,7 +106,13 @@ public class NoteFragment extends Fragment implements View.OnClickListener, OnNo
     }
 
     private void showDataNote() {
-        listNote = myDatabase.getAllNote();
+        if (MainActivity.SORT == 1) {
+            listNote = myDatabase.sortNewDate();
+        } else if (MainActivity.SORT == 2) {
+            listNote = myDatabase.sortOldDate();
+        } else {
+            listNote = myDatabase.getAllNote();
+        }
         setDataNoteToView();
     }
 

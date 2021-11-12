@@ -23,6 +23,7 @@ import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tuplv.mynote.Format;
+import com.tuplv.mynote.InvertingColor;
 import com.tuplv.mynote.R;
 import com.tuplv.mynote.database.MyDatabase;
 import com.tuplv.mynote.interf.OnNoteClickListener;
@@ -30,6 +31,8 @@ import com.tuplv.mynote.model.Category;
 import com.tuplv.mynote.model.Note;
 
 import java.util.List;
+
+import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
@@ -71,6 +74,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         drawable.setColorFilter(backgroundItemColor, PorterDuff.Mode.SRC_ATOP);
         holder.llItemNote.setBackground(drawable);
 
+        holder.tvTitle.setTextColor(InvertingColor.invertingColor(backgroundItemColor));
+        holder.tvContent.setTextColor(InvertingColor.invertingColor(backgroundItemColor));
+        holder.tvDateUpdate.setTextColor(InvertingColor.invertingColor(backgroundItemColor));
+
         holder.tvTitle.setText(note.getTitle());
         holder.tvContent.setText(Format.sortText(note.getContent(), 120));
         holder.tvDateUpdate.setText(note.getUpdateAt());
@@ -106,6 +113,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                 switch (item.getItemId()) {
                     case R.id.mnuChangeTag:
                         updateCategoryOfNote(note);
+                        break;
+                    case R.id.mnuChangeBackground:
+                        openColorPicker(holder, note);
                         break;
                     case R.id.mnuDeleteNote:
                         listener.onDeleteClick(note);
@@ -148,6 +158,29 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         });
 
         dialog.show();
+    }
+
+    private void openColorPicker(ViewHolder holder, Note note) {
+        backgroundItemColor = Integer.parseInt(note.getColor());
+        AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(context, backgroundItemColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+            @Override
+            public void onCancel(AmbilWarnaDialog dialog) {
+
+            }
+
+            @Override
+            public void onOk(AmbilWarnaDialog dialog, int color) {
+                note.setColor(String.valueOf(color));
+                holder.tvTitle.setTextColor(InvertingColor.invertingColor(color));
+                holder.tvContent.setTextColor(InvertingColor.invertingColor(color));
+                holder.tvDateUpdate.setTextColor(InvertingColor.invertingColor(color));
+                if (MyDatabase.getInstance(context).updateNote(note)){
+                    Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show();
+                }
+                notifyDataSetChanged();
+            }
+        });
+        colorPicker.show();
     }
 
     @Override

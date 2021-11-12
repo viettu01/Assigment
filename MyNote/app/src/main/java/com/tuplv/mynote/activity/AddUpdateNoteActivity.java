@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.huawei.hms.hmsscankit.ScanUtil;
 import com.huawei.hms.ml.scan.HmsScan;
 import com.huawei.hms.ml.scan.HmsScanAnalyzerOptions;
+import com.tuplv.mynote.InvertingColor;
 import com.tuplv.mynote.R;
 import com.tuplv.mynote.database.MyDatabase;
 import com.tuplv.mynote.model.Category;
@@ -33,13 +34,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import yuku.ambilwarna.AmbilWarnaDialog;
+
 public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final int REQUEST_CODE_SCAN = 0x01;
 
     EditText edtTitleNote, edtContentNote;
     TextView tvDateUpdateNote;
-    ImageView imgCloseAddNote, imgTodoList, imgAddNote, imgScanQRCode;
+    ImageView imgCloseAddNote, imgTodoList, imgBackgroundColorNote, imgAddNote, imgScanQRCode;
     Spinner spnCategory;
 
     MyDatabase myDatabase = MyDatabase.getInstance(this);
@@ -50,6 +53,8 @@ public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnC
     Note note;
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+
+    int defaultColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,7 @@ public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnC
         tvDateUpdateNote = findViewById(R.id.tvDateUpdateNote);
         imgCloseAddNote = findViewById(R.id.imgCloseAddNote);
         imgTodoList = findViewById(R.id.imgTodoList);
+        imgBackgroundColorNote = findViewById(R.id.imgBackgroundColorNote);
         imgScanQRCode = findViewById(R.id.imgScanQRCode);
         imgAddNote = findViewById(R.id.imgAddNote);
         spnCategory = findViewById(R.id.spnCategory);
@@ -74,6 +80,7 @@ public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnC
         tvDateUpdateNote.setOnClickListener(this);
         imgCloseAddNote.setOnClickListener(this);
         imgTodoList.setOnClickListener(this);
+        imgBackgroundColorNote.setOnClickListener(this);
         imgScanQRCode.setOnClickListener(this);
         imgAddNote.setOnClickListener(this);
     }
@@ -87,6 +94,9 @@ public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnC
                 break;
             case R.id.imgTodoList:
                 break;
+            case R.id.imgBackgroundColorNote:
+                openColorPicker();
+                break;
             case R.id.imgScanQRCode:
                 int result = ScanUtil.startScan(this,
                         REQUEST_CODE_SCAN,
@@ -98,6 +108,24 @@ public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnC
                 addNote();
                 break;
         }
+    }
+
+    private void openColorPicker() {
+        defaultColor = ((ColorDrawable) edtContentNote.getBackground()).getColor();
+        AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, defaultColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+            @Override
+            public void onCancel(AmbilWarnaDialog dialog) {
+
+            }
+
+            @Override
+            public void onOk(AmbilWarnaDialog dialog, int color) {
+                defaultColor = color;
+                edtContentNote.setBackgroundColor(defaultColor);
+                edtContentNote.setTextColor(InvertingColor.invertingColor(color));
+            }
+        });
+        colorPicker.show();
     }
 
     private void getCategory() {
@@ -119,6 +147,8 @@ public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnC
             edtTitleNote.setText(note.getTitle());
             tvDateUpdateNote.setText(note.getUpdateAt());
             edtContentNote.setText(note.getContent());
+            edtContentNote.setTextColor(InvertingColor.invertingColor(Integer.parseInt(note.getColor())));
+            edtContentNote.setBackgroundColor(Integer.parseInt(note.getColor()));
 
             for (int i = 0; i < listCategory.size(); i++) {
                 if (note.getCategoryId() == listCategory.get(i).getId()) {

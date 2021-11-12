@@ -56,6 +56,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private int currentFragment = FRAGMENT_NOTE;
 
+    public static int ROW = 1;
+    public static int SORT = 0;
+    SharedPreferences sharedPreferences;
+
     DrawerLayout drawerLayout;
     Toolbar tbMain;
     NavigationView nav;
@@ -83,6 +87,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         replaceFragment(new NoteFragment());
         nav.getMenu().findItem(R.id.nav_note).setChecked(true);
+
+        sharedPreferences = getSharedPreferences("option", MODE_PRIVATE);
     }
 
     private void loadAds() {
@@ -162,5 +168,47 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.contentFrame, fragment);
         transaction.commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        switch (item.getItemId()) {
+            case R.id.munGrid:
+                ROW = 2;
+                editor.putInt("ROW", ROW);
+                editor.apply();
+                if (currentFragment == FRAGMENT_NOTE) {
+                    replaceFragment(new NoteFragment());
+                }
+                break;
+            case R.id.mnuList:
+                ROW = 1;
+                editor.putInt("ROW", ROW);
+                editor.apply();
+                if (currentFragment == FRAGMENT_NOTE) {
+                    replaceFragment(new NoteFragment());
+                }
+                break;
+            case R.id.mnuUpdateNew:
+                SORT = 1;
+                if (currentFragment == FRAGMENT_NOTE) {
+                    replaceFragment(new NoteFragment());
+                }
+                break;
+            case R.id.mnuUpdateOld:
+                SORT = 2;
+                if (currentFragment == FRAGMENT_NOTE) {
+                    replaceFragment(new NoteFragment());
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

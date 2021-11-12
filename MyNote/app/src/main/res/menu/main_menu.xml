@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/mnuSearch"
+        android:icon="@drawable/ic_search"
+        android:title="Search"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/mnuSort"
+        android:title="Sắp xếp">
+        <menu>
+            <item
+                android:id="@+id/mnuUpdateNew"
+                android:title="Sửa đổi mới nhất đầu tiên" />
+            <item
+                android:id="@+id/mnuUpdateOld"
+                android:title="Sửa đổi cũ nhất đầu tiên" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/mnuListStyle"
+        android:title="Kiểu danh sách">
+        <menu>
+            <item
+                android:id="@+id/munGrid"
+                android:title="Lưới" />
+            <item
+                android:id="@+id/mnuList"
+                android:title="Danh sách" />
+        </menu>
+    </item>
+</menu>

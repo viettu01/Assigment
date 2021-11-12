@@ -201,6 +201,44 @@ public class MyDatabase extends SQLiteOpenHelper {
         return index_delete >= 1;
     }
 
+    public List<Note> sortNewDate() {
+        List<Note> list = new ArrayList<>();
+        String sql = "SELECT * FROM " + TABLE_NOTE + " ORDER BY updated_at DESC";
+        Cursor cursor = rawQuery(sql, null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            int id_category = cursor.getInt(1);
+            String title = cursor.getString(2);
+            String content = cursor.getString(3);
+            String color = cursor.getString(4);
+            String created_at = cursor.getString(5);
+            String updated_at = cursor.getString(6);
+
+            Note note = new Note(id, id_category, title, content, color, created_at, updated_at);
+            list.add(note);
+        }
+        return list;
+    }
+
+    public List<Note> sortOldDate() {
+        List<Note> list = new ArrayList<>();
+        String sql = "SELECT * FROM " + TABLE_NOTE + " ORDER BY updated_at ASC";
+        Cursor cursor = rawQuery(sql, null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            int id_category = cursor.getInt(1);
+            String title = cursor.getString(2);
+            String content = cursor.getString(3);
+            String color = cursor.getString(4);
+            String created_at = cursor.getString(5);
+            String updated_at = cursor.getString(6);
+
+            Note note = new Note(id, id_category, title, content, color, created_at, updated_at);
+            list.add(note);
+        }
+        return list;
+    }
+
     public boolean checkIdExist(int id_check) {
         List<Note> list = new ArrayList<>();
         String sql = "SELECT id FROM " + TABLE_NOTE + " WHERE id = " + id_check;
