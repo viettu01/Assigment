@@ -95,7 +95,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         } else if (layout == R.layout.item_list_category) {
             if (category.getId() == 1) {
                 holder.imgvMoreCategory.setEnabled(false);
-                holder.imgvLockItem.setEnabled(false);
+//                holder.imgvLockItem.setEnabled(false);
             }
             holder.imgvMoreCategory.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -123,8 +123,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             super(itemView);
             tvItemCategory = itemView.findViewById(R.id.tvItemCategory);
             if (layout == R.layout.item_list_category) {
-                imgvMoveItem = itemView.findViewById(R.id.imgvMoveItem);
-                imgvLockItem = itemView.findViewById(R.id.imgvLockItem);
+//                imgvMoveItem = itemView.findViewById(R.id.imgvMoveItem);
+//                imgvLockItem = itemView.findViewById(R.id.imgvLockItem);
                 imgvMoreCategory = itemView.findViewById(R.id.imgvMoreCategory);
             }
         }

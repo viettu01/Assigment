@@ -5,30 +5,45 @@
         android:id="@+id/mnuSearch"
         android:icon="@drawable/ic_search"
         android:title="Search"
-        app:showAsAction="always" />
+        app:showAsAction="always">
+<!--        <menu>-->
+<!--            <item-->
+<!--                android:id="@+id/mnuSearchTitleNote"-->
+<!--                android:title="title note" />-->
+<!--            <item-->
+<!--                android:id="@+id/mnuSearchDate"-->
+<!--                android:title="date" />-->
+<!--        </menu>-->
+    </item>
 
     <item
         android:id="@+id/mnuSort"
-        android:title="Sắp xếp">
+        android:title="Sort">
         <menu>
+<!--            <item-->
+<!--                android:id="@+id/mnuUpdateNew"-->
+<!--                android:title="Sửa đổi mới nhất đầu tiên" />-->
+<!--            <item-->
+<!--                android:id="@+id/mnuUpdateOld"-->
+<!--                android:title="Sửa đổi cũ nhất đầu tiên" />-->
             <item
-                android:id="@+id/mnuUpdateNew"
-                android:title="Sửa đổi mới nhất đầu tiên" />
+                android:id="@+id/mnuSortAZ"
+                android:title="Tên A - Z" />
             <item
-                android:id="@+id/mnuUpdateOld"
-                android:title="Sửa đổi cũ nhất đầu tiên" />
+                android:id="@+id/mnuSortZA"
+                android:title="Tên Z - A" />
         </menu>
     </item>
     <item
         android:id="@+id/mnuListStyle"
-        android:title="Kiểu danh sách">
+        android:title="Style list">
         <menu>
             <item
                 android:id="@+id/munGrid"
-                android:title="Lưới" />
+                android:title="Grid" />
             <item
                 android:id="@+id/mnuList"
-                android:title="Danh sách" />
+                android:title="List" />
         </menu>
     </item>
 </menu>

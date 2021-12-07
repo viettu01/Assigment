@@ -24,7 +24,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
 import com.huawei.hms.hmsscankit.ScanUtil;
 import com.huawei.hms.hmsscankit.WriterException;
 import com.huawei.hms.ml.scan.HmsBuildBitmapOption;
@@ -58,6 +57,9 @@ public class NoteFragment extends Fragment implements View.OnClickListener, OnNo
 
     SharedPreferences sharedPreferences;
     int ROW = 1;
+    int SORT = 1;
+    private static final String TYPE_SORT_DESC = "DESC";
+    private static final String TYPE_SORT_ASC = "ASC";
 
     @Nullable
     @Override
@@ -73,6 +75,7 @@ public class NoteFragment extends Fragment implements View.OnClickListener, OnNo
 
         sharedPreferences = getActivity().getSharedPreferences("option", MODE_PRIVATE);
         ROW = sharedPreferences.getInt("ROW", 1);
+        SORT = sharedPreferences.getInt("SORT", 1);
 
         return view;
     }
@@ -106,10 +109,14 @@ public class NoteFragment extends Fragment implements View.OnClickListener, OnNo
     }
 
     private void showDataNote() {
-        if (MainActivity.SORT == 1) {
-            listNote = myDatabase.sortNewDate();
-        } else if (MainActivity.SORT == 2) {
-            listNote = myDatabase.sortOldDate();
+        if (SORT == 1) {
+            listNote = myDatabase.sortDate(TYPE_SORT_DESC);
+        } else if (SORT == 2) {
+            listNote = myDatabase.sortDate(TYPE_SORT_ASC);
+        } else if (SORT == 3) {
+            listNote = myDatabase.sortTitle(TYPE_SORT_ASC);
+        } else if (SORT == 4) {
+            listNote = myDatabase.sortTitle(TYPE_SORT_DESC);
         } else {
             listNote = myDatabase.getAllNote();
         }

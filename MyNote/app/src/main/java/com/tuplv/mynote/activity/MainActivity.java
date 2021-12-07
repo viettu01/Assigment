@@ -3,21 +3,13 @@ package com.tuplv.mynote.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -31,18 +23,13 @@ import com.huawei.hms.ads.AdParam;
 import com.huawei.hms.ads.BannerAdSize;
 import com.huawei.hms.ads.HwAds;
 import com.huawei.hms.ads.banner.BannerView;
-import com.huawei.hms.hmsscankit.ScanUtil;
-import com.huawei.hms.ml.scan.HmsScan;
-import com.huawei.hms.ml.scan.HmsScanAnalyzerOptions;
 import com.tuplv.mynote.R;
+import com.tuplv.mynote.SearchActivity;
 import com.tuplv.mynote.fragment.CalendarFragment;
 import com.tuplv.mynote.fragment.NoteFragment;
 import com.tuplv.mynote.fragment.RemindFragment;
 import com.tuplv.mynote.fragment.SettingsFragment;
 import com.tuplv.mynote.fragment.TrashFragment;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -180,6 +167,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         switch (item.getItemId()) {
+            case R.id.mnuSearch:
+                startActivity(new Intent(this, SearchActivity.class));
+                break;
+//            case R.id.mnuSearchTitleNote:
+//                startActivity(new Intent(this, SearchActivity.class));
+//                break;
+//            case R.id.mnuSearchDate:
+//                break;
             case R.id.munGrid:
                 ROW = 2;
                 editor.putInt("ROW", ROW);
@@ -196,14 +191,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     replaceFragment(new NoteFragment());
                 }
                 break;
-            case R.id.mnuUpdateNew:
-                SORT = 1;
+//            case R.id.mnuUpdateNew:
+//                SORT = 1;
+//                editor.putInt("SORT", SORT);
+//                editor.apply();
+//                if (currentFragment == FRAGMENT_NOTE) {
+//                    replaceFragment(new NoteFragment());
+//                }
+//                break;
+//            case R.id.mnuUpdateOld:
+//                SORT = 2;
+//                editor.putInt("SORT", SORT);
+//                editor.apply();
+//                if (currentFragment == FRAGMENT_NOTE) {
+//                    replaceFragment(new NoteFragment());
+//                }
+//                break;
+            case R.id.mnuSortAZ:
+                SORT = 3;
+                editor.putInt("SORT", SORT);
+                editor.apply();
                 if (currentFragment == FRAGMENT_NOTE) {
                     replaceFragment(new NoteFragment());
                 }
                 break;
-            case R.id.mnuUpdateOld:
-                SORT = 2;
+            case R.id.mnuSortZA:
+                SORT = 4;
+                editor.putInt("SORT", SORT);
+                editor.apply();
                 if (currentFragment == FRAGMENT_NOTE) {
                     replaceFragment(new NoteFragment());
                 }

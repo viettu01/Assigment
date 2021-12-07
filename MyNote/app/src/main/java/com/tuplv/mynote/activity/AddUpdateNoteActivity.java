@@ -71,7 +71,7 @@ public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnC
         edtContentNote = findViewById(R.id.edtContentNote);
         tvDateUpdateNote = findViewById(R.id.tvDateUpdateNote);
         imgCloseAddNote = findViewById(R.id.imgCloseAddNote);
-        imgTodoList = findViewById(R.id.imgTodoList);
+//        imgTodoList = findViewById(R.id.imgTodoList);
         imgBackgroundColorNote = findViewById(R.id.imgBackgroundColorNote);
         imgScanQRCode = findViewById(R.id.imgScanQRCode);
         imgAddNote = findViewById(R.id.imgAddNote);
@@ -79,7 +79,7 @@ public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnC
 
         tvDateUpdateNote.setOnClickListener(this);
         imgCloseAddNote.setOnClickListener(this);
-        imgTodoList.setOnClickListener(this);
+//        imgTodoList.setOnClickListener(this);
         imgBackgroundColorNote.setOnClickListener(this);
         imgScanQRCode.setOnClickListener(this);
         imgAddNote.setOnClickListener(this);
@@ -91,8 +91,6 @@ public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnC
         switch (v.getId()) {
             case R.id.imgCloseAddNote:
                 finish();
-                break;
-            case R.id.imgTodoList:
                 break;
             case R.id.imgBackgroundColorNote:
                 openColorPicker();

@@ -5,11 +5,11 @@
     android:orientation="horizontal"
     android:padding="10dp">
 
-    <ImageView
-        android:id="@+id/imgvMoveItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_unfold_more" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imgvMoveItem"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:src="@drawable/ic_unfold_more" />-->
 
     <TextView
         android:id="@+id/tvItemCategory"
@@ -21,14 +21,14 @@
         android:text="title"
         android:textSize="20sp" />
 
-    <ImageView
-        android:layout_marginEnd="10dp"
-        android:id="@+id/imgvLockItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:src="@drawable/ic_lock_open" />
+<!--    <ImageView-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:id="@+id/imgvLockItem"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="?attr/selectableItemBackgroundBorderless"-->
+<!--        android:clickable="true"-->
+<!--        android:src="@drawable/ic_lock_open" />-->
 
     <ImageView
         android:id="@+id/imgvMoreCategory"

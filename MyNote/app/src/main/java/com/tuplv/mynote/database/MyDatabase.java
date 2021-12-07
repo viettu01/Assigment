@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-import com.tuplv.mynote.R;
 import com.tuplv.mynote.model.Category;
 import com.tuplv.mynote.model.Note;
 
@@ -66,7 +65,8 @@ public class MyDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sqlCreateTableCategory = "CREATE TABLE IF NOT EXISTS " + TABLE_CATEGORY + "(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, color TEXT)";
+        String sqlCreateTableCategory =
+                "CREATE TABLE IF NOT EXISTS " + TABLE_CATEGORY + "(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, color TEXT)";
         db.execSQL(sqlCreateTableCategory);
         Category category = new Category(0, "All", "");
         ContentValues values = new ContentValues();
@@ -201,9 +201,9 @@ public class MyDatabase extends SQLiteOpenHelper {
         return index_delete >= 1;
     }
 
-    public List<Note> sortNewDate() {
+    public List<Note> sortDate(String type) {
         List<Note> list = new ArrayList<>();
-        String sql = "SELECT * FROM " + TABLE_NOTE + " ORDER BY updated_at DESC";
+        String sql = "SELECT * FROM " + TABLE_NOTE + " ORDER BY updated_at " + type;
         Cursor cursor = rawQuery(sql, null);
         while (cursor.moveToNext()) {
             int id = cursor.getInt(0);
@@ -220,9 +220,9 @@ public class MyDatabase extends SQLiteOpenHelper {
         return list;
     }
 
-    public List<Note> sortOldDate() {
+    public List<Note> sortTitle(String type) {
         List<Note> list = new ArrayList<>();
-        String sql = "SELECT * FROM " + TABLE_NOTE + " ORDER BY updated_at ASC";
+        String sql = "SELECT * FROM " + TABLE_NOTE + " ORDER BY title " + type;
         Cursor cursor = rawQuery(sql, null);
         while (cursor.moveToNext()) {
             int id = cursor.getInt(0);
@@ -251,5 +251,24 @@ public class MyDatabase extends SQLiteOpenHelper {
             }
         }
         return false;
+    }
+
+    public List<Note> findNoteByTitle(String titleSearch) {
+        List<Note> list = new ArrayList<>();
+        String sql = "SELECT * FROM " + TABLE_NOTE + " WHERE title LIKE '%" + titleSearch + "%'";
+        Cursor cursor = rawQuery(sql, null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            int id_category = cursor.getInt(1);
+            String title = cursor.getString(2);
+            String content = cursor.getString(3);
+            String color = cursor.getString(4);
+            String created_at = cursor.getString(5);
+            String updated_at = cursor.getString(6);
+
+            Note note = new Note(id, id_category, title, content, color, created_at, updated_at);
+            list.add(note);
+        }
+        return list;
     }
 }
