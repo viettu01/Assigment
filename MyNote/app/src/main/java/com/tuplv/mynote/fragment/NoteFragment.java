@@ -2,12 +2,14 @@ package com.tuplv.mynote.fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,7 +54,7 @@ public class NoteFragment extends Fragment implements View.OnClickListener, OnNo
     MyDatabase myDatabase;
 
     ImageView imgAddCategory;
-    FloatingActionButton fabAddNote;
+    FloatingActionButton fabAddNote, fabMusic;
     RecyclerView rvCategory, rvNote;
 
     SharedPreferences sharedPreferences;
@@ -72,6 +74,7 @@ public class NoteFragment extends Fragment implements View.OnClickListener, OnNo
 
         imgAddCategory.setOnClickListener(this);
         fabAddNote.setOnClickListener(this);
+//        fabMusic.setOnClickListener(this);
 
         sharedPreferences = getActivity().getSharedPreferences("option", MODE_PRIVATE);
         ROW = sharedPreferences.getInt("ROW", 1);
@@ -83,6 +86,7 @@ public class NoteFragment extends Fragment implements View.OnClickListener, OnNo
     private void mapping(View view) {
         imgAddCategory = view.findViewById(R.id.imgAddCategory);
         fabAddNote = view.findViewById(R.id.fabAddNote);
+//        fabMusic = view.findViewById(R.id.fabMusic);
         rvCategory = view.findViewById(R.id.lvCategory);
         rvNote = view.findViewById(R.id.rvNote);
     }
@@ -96,6 +100,15 @@ public class NoteFragment extends Fragment implements View.OnClickListener, OnNo
             case R.id.fabAddNote:
                 startActivity(new Intent(getActivity(), AddUpdateNoteActivity.class));
                 break;
+//            case R.id.fabMusic:
+//                if (MainActivity.mediaPlayer.isPlaying()) {
+//                    fabMusic.setImageDrawable(getResources().getDrawable(R.drawable.ic_music_on_note));
+//                    MainActivity.mediaPlayer.pause();
+//                } else {
+//                    fabMusic.setImageDrawable(getResources().getDrawable(R.drawable.ic_music_off));
+//                    MainActivity.mediaPlayer.start();
+//                }
+//                break;
             default:
                 break;
         }

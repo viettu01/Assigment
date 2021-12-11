@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/mnuSearch"
-        android:icon="@drawable/ic_search"
-        android:title="Search"
-        app:showAsAction="always">
+<!--    <item-->
+<!--        android:id="@+id/mnuSearch"-->
+<!--        android:icon="@drawable/ic_search"-->
+<!--        android:title="Search"-->
+<!--        app:showAsAction="always">-->
 <!--        <menu>-->
 <!--            <item-->
 <!--                android:id="@+id/mnuSearchTitleNote"-->
-<!--                android:title="title note" />-->
+<!--                android:title="Title note" />-->
 <!--            <item-->
 <!--                android:id="@+id/mnuSearchDate"-->
-<!--                android:title="date" />-->
+<!--                android:title="Date" />-->
 <!--        </menu>-->
-    </item>
+<!--    </item>-->
 
     <item
         android:id="@+id/mnuSort"
@@ -38,9 +38,9 @@
         android:id="@+id/mnuListStyle"
         android:title="Style list">
         <menu>
-            <item
-                android:id="@+id/munGrid"
-                android:title="Grid" />
+<!--            <item-->
+<!--                android:id="@+id/munGrid"-->
+<!--                android:title="Grid" />-->
             <item
                 android:id="@+id/mnuList"
                 android:title="List" />

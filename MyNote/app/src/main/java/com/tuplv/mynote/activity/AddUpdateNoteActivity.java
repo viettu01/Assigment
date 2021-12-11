@@ -1,6 +1,7 @@
 package com.tuplv.mynote.activity;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -31,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -42,17 +45,19 @@ public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnC
 
     EditText edtTitleNote, edtContentNote;
     TextView tvDateUpdateNote;
-    ImageView imgCloseAddNote, imgTodoList, imgBackgroundColorNote, imgAddNote, imgScanQRCode;
+    ImageView imgCloseAddNote, imgBackgroundColorNote, imgAddNote, imgScanQRCode, imgChangeColorText;
     Spinner spnCategory;
 
     MyDatabase myDatabase = MyDatabase.getInstance(this);
 
     List<Category> listCategory;
+    List<Note> listNote;
     ArrayAdapter categoryAdapter;
 
     Note note;
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+    Calendar calendar;
 
     int defaultColor;
 
@@ -64,6 +69,7 @@ public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnC
         setDateTimeUpdateNote();
         getCategory();
         checkUpdate();
+//        calendar = Calendar.getInstance();
     }
 
     private void mapping() {
@@ -71,17 +77,17 @@ public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnC
         edtContentNote = findViewById(R.id.edtContentNote);
         tvDateUpdateNote = findViewById(R.id.tvDateUpdateNote);
         imgCloseAddNote = findViewById(R.id.imgCloseAddNote);
-//        imgTodoList = findViewById(R.id.imgTodoList);
         imgBackgroundColorNote = findViewById(R.id.imgBackgroundColorNote);
-        imgScanQRCode = findViewById(R.id.imgScanQRCode);
+//        imgScanQRCode = findViewById(R.id.imgScanQRCode);
+//        imgChangeColorText = findViewById(R.id.imgChangeColorText);
         imgAddNote = findViewById(R.id.imgAddNote);
         spnCategory = findViewById(R.id.spnCategory);
 
         tvDateUpdateNote.setOnClickListener(this);
         imgCloseAddNote.setOnClickListener(this);
-//        imgTodoList.setOnClickListener(this);
         imgBackgroundColorNote.setOnClickListener(this);
-        imgScanQRCode.setOnClickListener(this);
+//        imgScanQRCode.setOnClickListener(this);
+//        imgChangeColorText.setOnClickListener(this);
         imgAddNote.setOnClickListener(this);
     }
 
@@ -95,16 +101,48 @@ public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnC
             case R.id.imgBackgroundColorNote:
                 openColorPicker();
                 break;
-            case R.id.imgScanQRCode:
-                int result = ScanUtil.startScan(this,
-                        REQUEST_CODE_SCAN,
-                        new HmsScanAnalyzerOptions.Creator()
-                                .setHmsScanTypes(HmsScan.ALL_SCAN_TYPE, HmsScan.CODE128_SCAN_TYPE)
-                                .create());
-                break;
+//            case R.id.imgScanQRCode:
+//                int result = ScanUtil.startScan(this,
+//                        REQUEST_CODE_SCAN,
+//                        new HmsScanAnalyzerOptions.Creator()
+//                                .setHmsScanTypes(HmsScan.ALL_SCAN_TYPE, HmsScan.CODE128_SCAN_TYPE)
+//                                .create());
+//                break;
             case R.id.imgAddNote:
                 addNote();
                 break;
+//            case R.id.tvDateUpdateNote:
+//                int year = calendar.get(Calendar.YEAR);
+//                int month = calendar.get(Calendar.MONTH);
+//                int day = calendar.get(Calendar.DAY_OF_MONTH);
+//
+//                DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+//                    @Override
+//                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                        Calendar chooseDate = Calendar.getInstance();
+//                        chooseDate.set(year, month, dayOfMonth);
+//                        String strDate = dateFormat.format(chooseDate.getTime());
+//                        tvDateUpdateNote.setText(strDate);
+//                    }
+//                }, year, month, day);
+//                datePickerDialog.show();
+//                break;
+//            case R.id.imgChangeColorText:
+//                defaultColor = edtContentNote.getTextColors().getDefaultColor();
+//                AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, defaultColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+//                    @Override
+//                    public void onCancel(AmbilWarnaDialog dialog) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onOk(AmbilWarnaDialog dialog, int color) {
+//                        defaultColor = color;
+//                        edtContentNote.setTextColor(defaultColor);
+//                    }
+//                });
+//                colorPicker.show();
+//                break;
         }
     }
 
@@ -163,8 +201,16 @@ public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnC
         String createdAt = tvDateUpdateNote.getText().toString();
         String content = edtContentNote.getText().toString();
         String color = String.valueOf(((ColorDrawable) edtContentNote.getBackground()).getColor());
-
+        listNote = myDatabase.getAllNote();
         if (note != null) {
+            for (int i = 0; i < listNote.size(); i++) {
+                if (!title.equalsIgnoreCase(note.getTitle())) {
+                    if (title.equalsIgnoreCase(listNote.get(i).getTitle())) {
+                        Toast.makeText(AddUpdateNoteActivity.this, "Tiêu đề đã tồn tại", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+            }
             note = new Note(note.getId(), id_category, title, content, color, note.getCreatedAt(), dateFormat.format(new Date()));
             if (myDatabase.updateNote(note)) {
                 Toast.makeText(this, "Successfully!", Toast.LENGTH_SHORT).show();
@@ -173,6 +219,12 @@ public class AddUpdateNoteActivity extends AppCompatActivity implements View.OnC
                 Toast.makeText(this, "Fix failed notes", Toast.LENGTH_SHORT).show();
             }
         } else {
+            for (int i = 0; i < listNote.size(); i++) {
+                if (title.equalsIgnoreCase(listNote.get(i).getTitle())) {
+                    Toast.makeText(AddUpdateNoteActivity.this, "Tiêu đề đã tồn tại", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
             note = new Note(0, id_category, title, content, color, createdAt, dateFormat.format(new Date()));
             if (myDatabase.insertNote(note)) {
                 Toast.makeText(this, "Successful!", Toast.LENGTH_SHORT).show();

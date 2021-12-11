@@ -104,12 +104,37 @@ public class ListCategoryActivity extends AppCompatActivity implements OnCategor
                 if (titleCategory.equalsIgnoreCase("")) {
                     dialog.dismiss();
                 } else {
-                    for (int i = 0; i < listCategory.size(); i++) {
-                        if (titleCategory.equalsIgnoreCase(listCategory.get(i).getTitle())) {
-                            Toast.makeText(ListCategoryActivity.this, "Tag already exist!", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                    }
+//                    for (int i = 0; i < listCategory.size(); i++) {
+//                        if (titleCategory.equalsIgnoreCase(listCategory.get(i).getTitle())) {
+//                            AlertDialog.Builder builder = new AlertDialog.Builder(ListCategoryActivity.this);
+//                            builder.setTitle("Warning!");
+//                            builder.setIcon(android.R.drawable.ic_delete);
+//                            builder.setMessage("Tag already exist, you want add?");
+//                            builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    Category category = new Category(0, titleCategory.trim(), "");
+//                                    if (myDatabase.insertCategory(category)) {
+//                                        Toast.makeText(ListCategoryActivity.this, "Successful!", Toast.LENGTH_SHORT).show();
+//                                        listCategory.add(category);
+//                                        categoryAdapter.notifyDataSetChanged();
+//                                        dialog.dismiss();
+//                                    } else {
+//                                        Toast.makeText(ListCategoryActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                }
+//                            });
+//                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//
+//                                }
+//                            });
+//                            builder.show();
+//                            Toast.makeText(ListCategoryActivity.this, "Tag already exist!", Toast.LENGTH_SHORT).show();
+//                            return;
+//                        }
+//                    }
                     Category category = new Category(0, titleCategory.trim(), "");
                     if (myDatabase.insertCategory(category)) {
                         Toast.makeText(ListCategoryActivity.this, "Successful!", Toast.LENGTH_SHORT).show();
@@ -162,12 +187,12 @@ public class ListCategoryActivity extends AppCompatActivity implements OnCategor
                 if (titleNew.equalsIgnoreCase("")) {
                     dialog.dismiss();
                 } else {
-                    for (int i = 0; i < listCategory.size(); i++) {
-                        if (titleNew.equalsIgnoreCase(listCategory.get(i).getTitle())) {
-                            Toast.makeText(ListCategoryActivity.this, "Tag already exist!", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                    }
+//                    for (int i = 0; i < listCategory.size(); i++) {
+//                        if (titleNew.equalsIgnoreCase(listCategory.get(i).getTitle())) {
+//                            Toast.makeText(ListCategoryActivity.this, "Tag already exist!", Toast.LENGTH_SHORT).show();
+//                            return;
+//                        }
+//                    }
                     category.setTitle(titleNew);
                     if (myDatabase.updateCategory(category)) {
                         Toast.makeText(ListCategoryActivity.this, "Successful!", Toast.LENGTH_SHORT).show();

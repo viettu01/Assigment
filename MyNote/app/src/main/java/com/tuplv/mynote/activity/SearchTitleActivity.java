@@ -1,4 +1,4 @@
-package com.tuplv.mynote;
+package com.tuplv.mynote.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,18 +8,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
-import com.tuplv.mynote.activity.AddUpdateNoteActivity;
+import com.tuplv.mynote.R;
 import com.tuplv.mynote.adapter.NoteAdapter;
 import com.tuplv.mynote.database.MyDatabase;
 import com.tuplv.mynote.interf.OnNoteClickListener;
 import com.tuplv.mynote.model.Note;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends AppCompatActivity implements OnNoteClickListener {
+public class SearchTitleActivity extends AppCompatActivity implements OnNoteClickListener {
 
+    ImageView imgBack;
     EditText edtSearch;
     RecyclerView rvNote;
 
@@ -29,8 +33,21 @@ public class SearchActivity extends AppCompatActivity implements OnNoteClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_search_title);
         mapping();
+    }
+
+    private void mapping() {
+        imgBack = findViewById(R.id.imgBack);
+        edtSearch = findViewById(R.id.edtSearch);
+        rvNote = findViewById(R.id.rvNote);
+
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -45,21 +62,18 @@ public class SearchActivity extends AppCompatActivity implements OnNoteClickList
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (edtSearch.length() != 0) {
-                    listNote = MyDatabase.getInstance(SearchActivity.this).findNoteByTitle(edtSearch.getText().toString());
-                    noteAdapter = new NoteAdapter(SearchActivity.this, R.layout.item_note, listNote, SearchActivity.this);
-                    rvNote.setAdapter(noteAdapter);
-                    StaggeredGridLayoutManager staggeredGridLayoutManager
-                            = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
-                    rvNote.setLayoutManager(staggeredGridLayoutManager);
+                if (s.length() != 0) {
+                    listNote = MyDatabase.getInstance(SearchTitleActivity.this).findNoteByTitle(s.toString().trim());
+                } else {
+                    listNote = new ArrayList<>();
                 }
+                noteAdapter = new NoteAdapter(SearchTitleActivity.this, R.layout.item_note, listNote, SearchTitleActivity.this);
+                rvNote.setAdapter(noteAdapter);
+                StaggeredGridLayoutManager staggeredGridLayoutManager
+                        = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+                rvNote.setLayoutManager(staggeredGridLayoutManager);
             }
         });
-    }
-
-    private void mapping() {
-        edtSearch = findViewById(R.id.edtSearch);
-        rvNote = findViewById(R.id.rvNote);
     }
 
     @Override

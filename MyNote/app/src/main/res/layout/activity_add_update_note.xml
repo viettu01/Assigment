@@ -80,14 +80,14 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/toolbar">
 
-<!--        <ImageView-->
-<!--            android:id="@+id/imgTodoList"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:background="?attr/selectableItemBackgroundBorderless"-->
-<!--            android:clickable="true"-->
-<!--            android:padding="10dp"-->
-<!--            android:src="@drawable/ic_check_box" />-->
+        <!--        <ImageView-->
+        <!--            android:id="@+id/imgTodoList"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:background="?attr/selectableItemBackgroundBorderless"-->
+        <!--            android:clickable="true"-->
+        <!--            android:padding="10dp"-->
+        <!--            android:src="@drawable/ic_check_box" />-->
 
         <ImageView
             android:id="@+id/imgBackgroundColorNote"
@@ -98,15 +98,25 @@
             android:padding="10dp"
             android:src="@drawable/ic_color_lens_30" />
 
-        <ImageView
-            android:id="@+id/imgScanQRCode"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@id/imgBackgroundColorNote"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:padding="10dp"
-            android:src="@drawable/ic_qr_code_scanner" />
+<!--        <ImageView-->
+<!--            android:id="@+id/imgScanQRCode"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_toEndOf="@id/imgBackgroundColorNote"-->
+<!--            android:background="?attr/selectableItemBackgroundBorderless"-->
+<!--            android:clickable="true"-->
+<!--            android:padding="10dp"-->
+<!--            android:src="@drawable/ic_qr_code_scanner" />-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/imgChangeColorText"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_toEndOf="@id/imgScanQRCode"-->
+<!--            android:background="?attr/selectableItemBackgroundBorderless"-->
+<!--            android:clickable="true"-->
+<!--            android:padding="10dp"-->
+<!--            android:src="@drawable/ic_format_color_text" />-->
 
         <ImageView
             android:id="@+id/imgAddNote"

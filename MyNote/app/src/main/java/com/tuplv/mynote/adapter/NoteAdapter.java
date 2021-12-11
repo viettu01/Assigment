@@ -75,7 +75,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         holder.llItemNote.setBackground(drawable);
 
         holder.tvTitle.setTextColor(InvertingColor.invertingColor(backgroundItemColor));
+
         holder.tvContent.setTextColor(InvertingColor.invertingColor(backgroundItemColor));
+//        holder.tvContent.setTextColor(backgroundItemColor);
+
         holder.tvDateUpdate.setTextColor(InvertingColor.invertingColor(backgroundItemColor));
 
         holder.tvTitle.setText(note.getTitle());

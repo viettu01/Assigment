@@ -271,4 +271,23 @@ public class MyDatabase extends SQLiteOpenHelper {
         }
         return list;
     }
+
+    public List<Note> findNoteByDate(String startDate, String endDate) {
+        List<Note> list = new ArrayList<>();
+        String sql = "SELECT * FROM " + TABLE_NOTE + " WHERE updated_at BETWEEN '" + startDate + "' AND '" + endDate + "'";
+        Cursor cursor = rawQuery(sql, null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            int id_category = cursor.getInt(1);
+            String title = cursor.getString(2);
+            String content = cursor.getString(3);
+            String color = cursor.getString(4);
+            String created_at = cursor.getString(5);
+            String updated_at = cursor.getString(6);
+
+            Note note = new Note(id, id_category, title, content, color, created_at, updated_at);
+            list.add(note);
+        }
+        return list;
+    }
 }

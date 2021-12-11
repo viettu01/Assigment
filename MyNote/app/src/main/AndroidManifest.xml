@@ -26,7 +26,10 @@
         android:theme="@style/Theme.MyNote"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".SearchActivity"
+            android:name=".activity.SearchTitleActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.SearchDateActivity"
             android:exported="true" />
         <activity
             android:name=".activity.AddUpdateNoteActivity"

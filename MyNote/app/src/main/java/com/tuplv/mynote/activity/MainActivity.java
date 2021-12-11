@@ -3,11 +3,11 @@ package com.tuplv.mynote.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -24,7 +24,6 @@ import com.huawei.hms.ads.BannerAdSize;
 import com.huawei.hms.ads.HwAds;
 import com.huawei.hms.ads.banner.BannerView;
 import com.tuplv.mynote.R;
-import com.tuplv.mynote.SearchActivity;
 import com.tuplv.mynote.fragment.CalendarFragment;
 import com.tuplv.mynote.fragment.NoteFragment;
 import com.tuplv.mynote.fragment.RemindFragment;
@@ -46,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static int ROW = 1;
     public static int SORT = 0;
     SharedPreferences sharedPreferences;
+
+    public static MediaPlayer mediaPlayer;
 
     DrawerLayout drawerLayout;
     Toolbar tbMain;
@@ -76,6 +77,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         nav.getMenu().findItem(R.id.nav_note).setChecked(true);
 
         sharedPreferences = getSharedPreferences("option", MODE_PRIVATE);
+
+//        mediaPlayer = MediaPlayer.create(this, R.raw.lily);
+//        mediaPlayer.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+//        mediaPlayer.pause();
     }
 
     private void loadAds() {
@@ -167,22 +177,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         switch (item.getItemId()) {
-            case R.id.mnuSearch:
-                startActivity(new Intent(this, SearchActivity.class));
-                break;
+//            case R.id.mnuSearch:
+//                startActivity(new Intent(this, SearchTitleActivity.class));
+//                break;
 //            case R.id.mnuSearchTitleNote:
-//                startActivity(new Intent(this, SearchActivity.class));
+//                startActivity(new Intent(this, SearchTitleActivity.class));
 //                break;
 //            case R.id.mnuSearchDate:
+//                startActivity(new Intent(this, SearchDateActivity.class));
 //                break;
-            case R.id.munGrid:
-                ROW = 2;
-                editor.putInt("ROW", ROW);
-                editor.apply();
-                if (currentFragment == FRAGMENT_NOTE) {
-                    replaceFragment(new NoteFragment());
-                }
-                break;
+//            case R.id.munGrid:
+//                ROW = 2;
+//                editor.putInt("ROW", ROW);
+//                editor.apply();
+//                if (currentFragment == FRAGMENT_NOTE) {
+//                    replaceFragment(new NoteFragment());
+//                }
+//                break;
             case R.id.mnuList:
                 ROW = 1;
                 editor.putInt("ROW", ROW);
